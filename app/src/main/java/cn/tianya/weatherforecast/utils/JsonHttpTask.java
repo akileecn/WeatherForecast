@@ -12,6 +12,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
+ * http异步请求返回json
  * Created by Administrator on 2017/8/23.
  */
 public class JsonHttpTask extends AsyncTask<Void, Void, Result<String>> {

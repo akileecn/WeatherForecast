@@ -35,8 +35,8 @@ dependencies {
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:design:26.+'
     testCompile 'junit:junit:4.12'
-//    provided 'org.projectlombok:lombok:1.16.18'
-//    annotationProcessor "org.projectlombok:lombok:1.16.18"
+    provided 'org.projectlombok:lombok:1.16.18'
+    annotationProcessor "org.projectlombok:lombok:1.16.18"
     compile 'com.squareup.okhttp3:okhttp:3.8.1'
     compile 'com.alibaba:fastjson:1.2.34'
     compile 'com.google.guava:guava:22.0-android'
