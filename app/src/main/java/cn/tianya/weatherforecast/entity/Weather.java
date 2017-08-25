@@ -13,7 +13,7 @@ public class Weather {
     private String high; //	"高温 33.0℃"
     private String low; // "低温 27.0℃"
     private String sunset; // "18:28"
-    private String aqi; // 18
+    private Integer aqi; // 18
     private String fx; // "东南风"
     private String fl; // "3-4级"
     private String type; //	"阵雨"
