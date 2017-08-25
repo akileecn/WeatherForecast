@@ -3,6 +3,7 @@ package cn.tianya.weatherforecast.activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -80,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                             Weather weather = getItem(i);
                             ViewHolder holder;
                             if (view == null) {
-                                view = View.inflate(MainActivity.this, R.layout.item_weather, viewGroup);
+                                view = LayoutInflater.from(MainActivity.this).inflate(R.layout.item_weather, viewGroup, false);
                                 holder = new ViewHolder(view);
                                 view.setTag(holder);
                             } else {

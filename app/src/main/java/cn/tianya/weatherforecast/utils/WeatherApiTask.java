@@ -10,7 +10,6 @@ import cn.tianya.weatherforecast.dto.WeatherResponse;
  * Created by Administrator on 2017/8/23.
  */
 public class WeatherApiTask extends JsonHttpTask {
-    private static final String API = "http://www.sojson.com/open/api/weather/json.shtml?city=";
     private CallBack callBack;
 
     public WeatherApiTask(String city, CallBack callBack) {
@@ -21,20 +20,20 @@ public class WeatherApiTask extends JsonHttpTask {
     @Override
     protected void onPostExecute(Result<String> result) {
         Result<WeatherResponse> refactorResult;
-        if(result.getSuccess() && !Strings.isNullOrEmpty(result.getData())){
+        if (result.getSuccess() && !Strings.isNullOrEmpty(result.getData())) {
             WeatherResponse response = JSON.parseObject(result.getData(), WeatherResponse.class);
-            if(response.isSuccess()){
+            if (response.isSuccess()) {
                 refactorResult = Result.success(response);
-            }else {
+            } else {
                 refactorResult = Result.fail(response.getMessage());
             }
-        }else{
+        } else {
             refactorResult = Result.fail(result.getMessage());
         }
         callBack.execute(refactorResult);
     }
 
-    public interface CallBack{
+    public interface CallBack {
         void execute(Result<WeatherResponse> result);
     }
 

@@ -35,6 +35,7 @@ public class JsonHttpTask extends AsyncTask<Void, Void, Result<String>> {
             Response response = client.newCall(request).execute();
             if (response.isSuccessful()) {
                 result = Result.success(response.body().string());
+                Log.d("httpResponse", url + ":" + result.getData());
             } else {
                 result = Result.fail(response.message());
             }
