@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initData() {
-        loadWeather("宁波");
+        loadWeather("杭州市");
     }
 
     private void loadWeather(String city) {

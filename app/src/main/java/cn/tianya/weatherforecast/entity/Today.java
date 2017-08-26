@@ -17,7 +17,7 @@ public class Today {
 
     private String weather;
 
-    public String getWeather() {
-        return weather + "℃";
+    public String getWendu() {
+        return wendu + "℃";
     }
 }
