@@ -3,6 +3,7 @@
     package="cn.tianya.weatherforecast">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -20,6 +21,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activity.CityActivity"
+            android:label="@string/title_activity_city"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.AddCityActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import cn.tianya.weatherforecast.entity.Area;
+import cn.tianya.weatherforecast.entity.City;
 
 import static org.junit.Assert.assertEquals;
 
@@ -44,7 +44,7 @@ public class ExampleInstrumentedTest {
         InputStream is = appContext.getAssets().open("cityData.js");
         String jsonStr = CharStreams.toString(new InputStreamReader(is, StandardCharsets.UTF_8));
         JSONObject json = JSON.parseObject(jsonStr);
-        List<Area> list = new ArrayList<>();
+        List<City> list = new ArrayList<>();
         // 省
         for (Map.Entry<String, Object> province : json.entrySet()) {
             String provinceName = province.getKey();
@@ -55,7 +55,7 @@ public class ExampleInstrumentedTest {
                 for (Map.Entry<String, Object> area : ((JSONObject) city.getValue()).entrySet()) {
                     String areaName = area.getKey();
                     String areaId = ((JSONObject) area.getValue()).getString("AREAID");
-                    Area item = new Area();
+                    City item = new City();
                     item.setArea(areaName);
                     item.setAreaId(areaId);
                     item.setCity(cityName);

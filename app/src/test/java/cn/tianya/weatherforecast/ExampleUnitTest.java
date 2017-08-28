@@ -12,10 +12,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
-import cn.tianya.weatherforecast.entity.Area;
+import cn.tianya.weatherforecast.entity.City;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -52,7 +51,7 @@ public class ExampleUnitTest {
         InputStream is = new FileInputStream("E:\\Software\\Android\\StudioProjects\\WeatherForecast\\app\\src\\main\\assets\\cityData.js");
         String jsonStr = CharStreams.toString(new InputStreamReader(is, StandardCharsets.UTF_8));
         JSONObject json = JSON.parseObject(jsonStr);
-        List<Area> list = new ArrayList<>();
+        List<City> list = new ArrayList<>();
         // 省
         json.forEach((pk, pv) -> {
             // 市
@@ -60,7 +59,7 @@ public class ExampleUnitTest {
                 // 地区
                 ((JSONObject) cv).forEach((ak, av) -> {
                     String areaId = ((JSONObject) av).get("AREAID").toString();
-                    Area item = new Area();
+                    City item = new City();
                     item.setArea(ak);
                     item.setAreaId(areaId);
                     item.setCity(ck);

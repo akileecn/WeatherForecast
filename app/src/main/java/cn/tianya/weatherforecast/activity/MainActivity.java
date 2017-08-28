@@ -1,5 +1,6 @@
 package cn.tianya.weatherforecast.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -44,8 +45,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            //TODO 打开设置action
+        if (id == R.id.action_to_city) {
+            startActivity(new Intent(this, CityActivity.class));
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -107,10 +108,10 @@ public class MainActivity extends AppCompatActivity {
         private TextView lowTv;
 
         private ViewHolder(View view) {
-            dataTv = view.findViewById(R.id.text_date);
-            typeTv = view.findViewById(R.id.text_type);
-            highTv = view.findViewById(R.id.text_high);
-            lowTv = view.findViewById(R.id.text_low);
+            dataTv = (TextView) view.findViewById(R.id.text_date);
+            typeTv = (TextView) view.findViewById(R.id.text_type);
+            highTv = (TextView) view.findViewById(R.id.text_high);
+            lowTv = (TextView) view.findViewById(R.id.text_low);
         }
 
         private void setData(Weather weather) {
