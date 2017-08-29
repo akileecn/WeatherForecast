@@ -1,4 +1,4 @@
-package cn.tianya.weatherforecast.utils;
+package cn.tianya.weatherforecast.api;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package cn.tianya.weatherforecast.utils;
+package cn.tianya.weatherforecast.api.sojson;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -7,6 +7,7 @@ import com.google.common.base.Throwables;
 
 import java.io.IOException;
 
+import cn.tianya.weatherforecast.api.Result;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;

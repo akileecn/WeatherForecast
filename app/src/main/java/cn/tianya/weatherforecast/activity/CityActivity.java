@@ -22,6 +22,7 @@ import cn.tianya.weatherforecast.dao.CityDao;
 import cn.tianya.weatherforecast.entity.City;
 import cn.tianya.weatherforecast.utils.BaseListAdapter;
 import cn.tianya.weatherforecast.utils.C;
+import cn.tianya.weatherforecast.utils.Helper;
 
 public class CityActivity extends AppCompatActivity implements View.OnClickListener {
     private static final int REQUEST_CODE_ADD_CITY = 1;
@@ -94,7 +95,11 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
         City city = (City) v.getTag();
         switch (v.getId()) {
             case R.id.text_city:
-                mSp.edit().putString(C.SP.KEY_CURRENT_CITY, city.getAreaId()).apply();
+                Helper.setDefaultCity(mSp, city);
+                Intent intent = new Intent();
+                intent.putExtra(C.INTENT_EXTRA_SELECTED_CITY, city);
+                setResult(RESULT_OK, intent);
+                finish();
                 break;
             case R.id.btn_delete:
                 deleteCity(city);

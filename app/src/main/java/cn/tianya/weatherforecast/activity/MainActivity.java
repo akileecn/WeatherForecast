@@ -18,16 +18,21 @@ import com.google.common.base.Strings;
 import java.util.List;
 
 import cn.tianya.weatherforecast.R;
-import cn.tianya.weatherforecast.dto.WeatherResponse;
-import cn.tianya.weatherforecast.entity.Today;
-import cn.tianya.weatherforecast.entity.Weather;
+import cn.tianya.weatherforecast.api.ApiHelper;
+import cn.tianya.weatherforecast.api.Forecast;
+import cn.tianya.weatherforecast.api.Today;
+import cn.tianya.weatherforecast.api.WeatherDto;
+import cn.tianya.weatherforecast.entity.City;
 import cn.tianya.weatherforecast.utils.BaseListAdapter;
-import cn.tianya.weatherforecast.utils.WeatherApiTask;
+import cn.tianya.weatherforecast.utils.C;
+import cn.tianya.weatherforecast.utils.Helper;
 
 public class MainActivity extends AppCompatActivity {
-    private TextView todayWenduTv;
+    private static final int REQUEST_CODE_SELECT_CITY = 1;
+    private TextView todayTemperatureTv;
     private TextView todayWeatherTv;
-    private ListView weatherLv;
+    private TextView cityTv;
+    private ListView forecastLv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,16 +42,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_SELECT_CITY && resultCode == RESULT_OK) {
+            City city = (City) data.getSerializableExtra(C.INTENT_EXTRA_SELECTED_CITY);
+            loadWeather(city);
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_to_city) {
-            startActivity(new Intent(this, CityActivity.class));
+            startActivityForResult(new Intent(this, CityActivity.class), REQUEST_CODE_SELECT_CITY);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -57,29 +76,37 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         todayWeatherTv = (TextView) findViewById(R.id.text_today_weather);
-        todayWenduTv = (TextView) findViewById(R.id.text_today_wendu);
-        weatherLv = (ListView) findViewById(R.id.list_weather);
+        todayTemperatureTv = (TextView) findViewById(R.id.text_today_temperature);
+        cityTv = (TextView) findViewById(R.id.text_city);
+        forecastLv = (ListView) findViewById(R.id.list_forecast);
     }
 
     private void initData() {
-        loadWeather("杭州市");
+        City city = Helper.getDefaultCity(getSharedPreferences(C.SP.NAME, MODE_PRIVATE));
+        loadWeather(city);
     }
 
-    private void loadWeather(String city) {
-        new WeatherApiTask(city, result -> {
+    /**
+     * 加载天气信息
+     *
+     * @param city 城市
+     */
+    private void loadWeather(City city) {
+        ApiHelper.executeApi(city, result -> {
             if (result.getSuccess()) {
-                WeatherResponse response = result.getData();
+                cityTv.setText(city.getArea());
+                WeatherDto response = result.getData();
                 Today today = response.getToday();
                 if (today != null) {
-                    todayWenduTv.setText(today.getWendu());
+                    todayTemperatureTv.setText(today.getTemperature());
                     todayWeatherTv.setText(today.getWeather());
                 }
-                List<Weather> list = response.getWeatherList();
+                List<Forecast> list = response.getForecastList();
                 if (list != null) {
-                    weatherLv.setAdapter(new BaseListAdapter<Weather>(list) {
+                    forecastLv.setAdapter(new BaseListAdapter<Forecast>(list) {
                         @Override
                         public View getView(int i, View view, ViewGroup viewGroup) {
-                            Weather weather = getItem(i);
+                            Forecast forecast = getItem(i);
                             ViewHolder holder;
                             if (view == null) {
                                 view = LayoutInflater.from(MainActivity.this).inflate(R.layout.item_weather, viewGroup, false);
@@ -88,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
                             } else {
                                 holder = (ViewHolder) view.getTag();
                             }
-                            holder.setData(weather);
+                            holder.setData(forecast);
                             return view;
                         }
                     });
@@ -98,27 +125,30 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
-        }).execute();
+        });
     }
 
     private static class ViewHolder {
-        private TextView dataTv;
-        private TextView typeTv;
-        private TextView highTv;
-        private TextView lowTv;
+        private TextView dateTv;
+        private TextView dayWeatherTv;
+        private TextView dayTemperatureTv;
+        private TextView nightWeatherTv;
+        private TextView nightTemperatureTv;
 
         private ViewHolder(View view) {
-            dataTv = (TextView) view.findViewById(R.id.text_date);
-            typeTv = (TextView) view.findViewById(R.id.text_type);
-            highTv = (TextView) view.findViewById(R.id.text_high);
-            lowTv = (TextView) view.findViewById(R.id.text_low);
+            dateTv = (TextView) view.findViewById(R.id.text_date);
+            dayWeatherTv = (TextView) view.findViewById(R.id.text_day_weather);
+            dayTemperatureTv = (TextView) view.findViewById(R.id.text_day_temperature);
+            nightWeatherTv = (TextView) view.findViewById(R.id.text_night_weather);
+            nightTemperatureTv = (TextView) view.findViewById(R.id.text_night_temperature);
         }
 
-        private void setData(Weather weather) {
-            dataTv.setText(weather.getDate());
-            typeTv.setText(weather.getType());
-            highTv.setText(weather.getHigh());
-            lowTv.setText(weather.getLow());
+        private void setData(Forecast forecast) {
+            dateTv.setText(forecast.getDate());
+            dayWeatherTv.setText(forecast.getDayWeather());
+            dayTemperatureTv.setText(forecast.getDayTemperature());
+            nightWeatherTv.setText(forecast.getNightWeather());
+            nightTemperatureTv.setText(forecast.getNightTemperature());
         }
     }
 }

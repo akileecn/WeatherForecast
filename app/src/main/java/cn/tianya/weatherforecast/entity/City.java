@@ -1,5 +1,7 @@
 package cn.tianya.weatherforecast.entity;
 
+import java.io.Serializable;
+
 import lombok.Data;
 
 /**
@@ -7,7 +9,7 @@ import lombok.Data;
  * Created by Administrator on 2017/8/26.
  */
 @Data
-public class City {
+public class City implements Serializable{
     private String province; // 省
     private String city; // 市
     private String area; // 地区

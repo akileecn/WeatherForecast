@@ -1,5 +1,6 @@
-package cn.tianya.weatherforecast.entity;
+package cn.tianya.weatherforecast.api.sojson;
 
+import cn.tianya.weatherforecast.api.Today;
 import lombok.Data;
 
 /**
@@ -7,7 +8,7 @@ import lombok.Data;
  * Created by Administrator on 2017/8/25.
  */
 @Data
-public class Today {
+public class SojsonToday implements Today{
     private String shidu; //"89%"
     private Integer pm25; //16
     private Integer pm10; //30
@@ -17,7 +18,8 @@ public class Today {
 
     private String weather;
 
-    public String getWendu() {
+    @Override
+    public String getTemperature() {
         return wendu + "℃";
     }
 }

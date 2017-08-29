@@ -1,10 +1,10 @@
-package cn.tianya.weatherforecast.dto;
+package cn.tianya.weatherforecast.api.sojson;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.tianya.weatherforecast.entity.Today;
-import cn.tianya.weatherforecast.entity.Weather;
+import cn.tianya.weatherforecast.api.Forecast;
+import cn.tianya.weatherforecast.api.WeatherDto;
 import lombok.Data;
 
 /**
@@ -17,7 +17,7 @@ public class WeatherResponse {
     private Integer status; // 200
     private String city; // "宁波"
     private Integer count; // 1
-    private WeatherData data;
+    private ForecastData data;
 
     public Boolean isSuccess() {
         return status == 200;
@@ -26,8 +26,8 @@ public class WeatherResponse {
     /**
      * 当天天气
      */
-    public Today getToday() {
-        Today today = new Today();
+    private SojsonToday getToday() {
+        SojsonToday today = new SojsonToday();
         today.setGanmao(data.ganmao);
         today.setPm10(data.pm10);
         today.setPm25(data.pm25);
@@ -43,8 +43,8 @@ public class WeatherResponse {
     /**
      * 天气预报列表
      */
-    public List<Weather> getWeatherList() {
-        List<Weather> list = new ArrayList<>();
+    private List<Forecast> getWeatherList() {
+        List<Forecast> list = new ArrayList<>();
         list.add(data.yesterday);
         if (!data.forecast.isEmpty()) {
             list.addAll(data.getForecast());
@@ -53,15 +53,21 @@ public class WeatherResponse {
     }
 
     @Data
-    public static class WeatherData {
+    public static class ForecastData {
         private String shidu; // "68%"
         private Integer pm25; // 7
         private Integer pm10; // 19
         private String quality; // "优"
         private String wendu; // "30"
         private String ganmao; // "各类人群可自由活动"
-        private Weather yesterday;
-        private List<Weather> forecast;
+        private SojsonWeather yesterday;
+        private List<SojsonWeather> forecast;
     }
 
+    public WeatherDto createWeatherDto() {
+        WeatherDto dto = new WeatherDto();
+        dto.setToday(getToday());
+        dto.setForecastList(getWeatherList());
+        return dto;
+    }
 }

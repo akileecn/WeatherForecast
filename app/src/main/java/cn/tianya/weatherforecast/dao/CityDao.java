@@ -54,7 +54,7 @@ public class CityDao {
     public List<City> list(String keywords) {
         SQLiteDatabase db = mHelper.getReadableDatabase();
         String likeArg = "%" + keywords + "%";
-        String sql = "SELECT province, city, area, area_id " +
+        String sql = "SELECT province, city, area, area_id, selected " +
                 "FROM city " +
                 "WHERE province LIKE ? " +
                 "OR city LIKE ? " +
@@ -67,9 +67,9 @@ public class CityDao {
     /**
      * 查询选中的数据
      */
-    public List<City> listSelected(){
+    public List<City> listSelected() {
         SQLiteDatabase db = mHelper.getReadableDatabase();
-        String sql = "SELECT province, city, area, area_id FROM city WHERE selected = 1";
+        String sql = "SELECT province, city, area, area_id, selected FROM city WHERE selected = 1";
         Cursor cursor = db.rawQuery(sql, null);
         return parseFromCursor(cursor);
     }
@@ -77,13 +77,13 @@ public class CityDao {
     /**
      * 更新为选中
      */
-    public void updateAsSelected(String areaId){
+    public void updateAsSelected(String areaId) {
         SQLiteDatabase db = mHelper.getWritableDatabase();
-        String sql = "UPDATE city SET selected = 0 WHERE area_id = ?";
+        String sql = "UPDATE city SET selected = 1 WHERE area_id = ?";
         db.execSQL(sql, new String[]{areaId});
     }
 
-    private List<City> parseFromCursor(Cursor cursor){
+    private List<City> parseFromCursor(Cursor cursor) {
         List<City> list = new ArrayList<>();
         while (cursor.moveToNext()) {
             City city = new City();
@@ -91,6 +91,7 @@ public class CityDao {
             city.setCity(cursor.getString(1));
             city.setArea(cursor.getString(2));
             city.setAreaId(cursor.getString(3));
+            city.setSelected(cursor.getInt(4) > 0);
             list.add(city);
         }
         cursor.close();
@@ -115,7 +116,7 @@ public class CityDao {
 
     private List<City> loadData() {
         String jsonStr;
-        try (InputStream is = mContext.getAssets().open("cityData.js")) {
+        try (InputStream is = mContext.getAssets().open(C.CITY_DATA_FILE)) {
             jsonStr = CharStreams.toString(new InputStreamReader(is, StandardCharsets.UTF_8));
         } catch (IOException ex) {
             return null;
