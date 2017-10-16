@@ -2,7 +2,6 @@ package cn.tianya.weatherforecast.utils;
 
 import com.alibaba.fastjson.JSON;
 
-import cn.tianya.weatherforecast.api.ApiHelper;
 import cn.tianya.weatherforecast.entity.City;
 
 /**
@@ -11,10 +10,6 @@ import cn.tianya.weatherforecast.entity.City;
  */
 
 public class C {
-    /**
-     * 接口类型
-     */
-    public static final ApiHelper.ApiType API_TYPE = ApiHelper.ApiType.wcn;
     /**
      * intent额外数据——选中城市
      */

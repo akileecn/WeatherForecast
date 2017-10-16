@@ -25,8 +25,14 @@
             android:name=".activity.CityActivity"
             android:label="@string/title_activity_city"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.AddCityActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".activity.AddCityActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <service
+            android:name=".service.WarnService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

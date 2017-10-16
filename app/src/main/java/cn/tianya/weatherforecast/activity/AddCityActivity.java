@@ -21,6 +21,7 @@ import cn.tianya.weatherforecast.utils.BaseListAdapter;
 
 public class AddCityActivity extends AppCompatActivity {
     private List<City> mCityList;
+    private BaseListAdapter<City> mCityAdapter;
     private CityDao mCityDao;
 
     @Override
@@ -57,7 +58,7 @@ public class AddCityActivity extends AppCompatActivity {
 
         ListView cityLv = (ListView) findViewById(R.id.list_city);
         mCityList = new ArrayList<>();
-        cityLv.setAdapter(new BaseListAdapter<City>(mCityList) {
+        mCityAdapter = new BaseListAdapter<City>(mCityList) {
             @Override
             public View getView(int i, View view, ViewGroup viewGroup) {
                 City city = getItem(i);
@@ -68,7 +69,8 @@ public class AddCityActivity extends AppCompatActivity {
                 view.setTag(city);
                 return view;
             }
-        });
+        };
+        cityLv.setAdapter(mCityAdapter);
         cityLv.setOnItemClickListener((parent, view, position, id) -> {
             City city = (City) view.getTag();
             mCityDao.updateAsSelected(city.getAreaId());
@@ -89,5 +91,6 @@ public class AddCityActivity extends AppCompatActivity {
         }
         List<City> list = mCityDao.list(keywords.trim());
         mCityList.addAll(list);
+        mCityAdapter.notifyDataSetChanged();
     }
 }
