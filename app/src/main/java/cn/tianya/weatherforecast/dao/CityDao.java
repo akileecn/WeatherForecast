@@ -20,9 +20,10 @@ import java.util.List;
 import java.util.Map;
 
 import cn.tianya.weatherforecast.entity.City;
-import cn.tianya.weatherforecast.utils.C;
+import cn.tianya.weatherforecast.Constants;
 
 /**
+ * 城市DAO
  * Created by Administrator on 2017/8/28.
  */
 public class CityDao {
@@ -30,22 +31,23 @@ public class CityDao {
     private SQLiteOpenHelper mHelper;
     private SharedPreferences mSp;
     private static final int DEFAULT_SIZE = 99; // 默认显示条数
+    private static final String CITY_DATA_FILE = "cityData.js"; // 城市数据文件
 
     public CityDao(Context context) {
         mContext = context;
         mHelper = new MySQLiteOpenHelper(context);
-        mSp = context.getSharedPreferences(C.SP.NAME, Context.MODE_PRIVATE);
+        mSp = context.getSharedPreferences(Constants.SP.NAME, Context.MODE_PRIVATE);
     }
 
     /**
      * 初始化
      */
     public void init() {
-        if (mSp.getBoolean(C.SP.KEY_CITY_INIT, false)) {
+        if (mSp.getBoolean(Constants.SP.KEY_CITY_INIT, false)) {
             return;
         }
         saveData(loadData());
-        mSp.edit().putBoolean(C.SP.KEY_CITY_INIT, true).apply();
+        mSp.edit().putBoolean(Constants.SP.KEY_CITY_INIT, true).apply();
     }
 
     /**
@@ -116,7 +118,7 @@ public class CityDao {
 
     private List<City> loadData() {
         String jsonStr;
-        try (InputStream is = mContext.getAssets().open(C.CITY_DATA_FILE)) {
+        try (InputStream is = mContext.getAssets().open(CITY_DATA_FILE)) {
             jsonStr = CharStreams.toString(new InputStreamReader(is, StandardCharsets.UTF_8));
         } catch (IOException ex) {
             return null;

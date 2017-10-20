@@ -1,8 +1,8 @@
 package cn.tianya.weatherforecast.api;
 
 /**
- * 天气接口
- * Created by Administrator on 2017/8/29.
+ * 预报数据
+ * Created by Administrator on 2017/10/20.
  */
 public interface Forecast {
     /**
@@ -11,22 +11,12 @@ public interface Forecast {
     String getDate();
 
     /**
-     * 白天天气
+     * 天气
      */
-    String getDayWeather();
+    String getWeather();
 
     /**
-     * 白天温度
+     * 温度
      */
-    String getDayTemperature();
-
-    /**
-     * 晚上天气
-     */
-    String getNightWeather();
-
-    /**
-     * 晚上天气
-     */
-    String getNightTemperature();
+    String getTemp();
 }

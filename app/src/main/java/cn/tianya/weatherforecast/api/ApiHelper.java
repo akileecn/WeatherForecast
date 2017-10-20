@@ -1,6 +1,5 @@
 package cn.tianya.weatherforecast.api;
 
-import cn.tianya.weatherforecast.api.wcn.WcnApiTask;
 import cn.tianya.weatherforecast.entity.City;
 
 /**
@@ -10,6 +9,7 @@ import cn.tianya.weatherforecast.entity.City;
 public class ApiHelper {
 
     public static void executeApi(City city, ApiCallBack callBack) {
-        new WcnApiTask(city.getAreaId(), callBack).execute();
+        new ApiTask(city.getAreaId(), callBack).execute();
     }
+
 }

@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class WeatherDto {
     private Today today; // 当天天气
-    private List<Forecast> forecastList; // 天气预报集合
+    private List<Forecast5d> forecastList; // 天气预报集合
 
     public Today getToday() {
         return today;
@@ -18,11 +18,11 @@ public class WeatherDto {
         this.today = today;
     }
 
-    public List<Forecast> getForecastList() {
+    public List<Forecast5d> getForecastList() {
         return forecastList;
     }
 
-    public void setForecastList(List<Forecast> forecastList) {
+    public void setForecastList(List<Forecast5d> forecastList) {
         this.forecastList = forecastList;
     }
 }

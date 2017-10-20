@@ -1,15 +1,17 @@
-package cn.tianya.weatherforecast.api.wcn;
+package cn.tianya.weatherforecast.api;
 
 import com.google.common.collect.ImmutableMap;
 
 import java.util.Map;
 
 /**
+ * API常量
  * Created by Administrator on 2017/8/29.
  */
-class WcnConstants {
+public class ApiConstants {
     private static final Map<String, String> WEATHER;
-    private static final String API_URL = "http://d1.weather.com.cn/weather_index/{id}.html";
+    private static final String API_INDEX = "http://d1.weather.com.cn/weather_index/{id}.html";
+    private static final String API_CALENDAR = "http://d1.weather.com.cn/calendar_new/{year}/{id}_{year}{month}.html";
     static final String API_REFERER = "http://www.weather.com.cn/";
 
     static {
@@ -55,7 +57,13 @@ class WcnConstants {
         return WEATHER.get(key);
     }
 
-    static String getApiUrl(String id) {
-        return API_URL.replace("{id}", id);
+    static String getApiIndex(String id) {
+        return API_INDEX.replace("{id}", id);
+    }
+
+    static String getApiCalendar(String id, int year, int month) {
+        String monthStr = month < 10 ? "0" + month : String.valueOf(month);
+        return API_CALENDAR.replace("{id}", id).replace("{year}", String.valueOf(year))
+                .replace("{month}", monthStr);
     }
 }

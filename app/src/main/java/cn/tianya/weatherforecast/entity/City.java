@@ -6,7 +6,7 @@ import java.io.Serializable;
  * 地区
  * Created by Administrator on 2017/8/26.
  */
-public class City implements Serializable{
+public class City implements Serializable {
     private String province; // 省
     private String city; // 市
     private String area; // 地区
@@ -22,6 +22,13 @@ public class City implements Serializable{
         DEFAULT_ONE.setCity("杭州");
         DEFAULT_ONE.setArea("杭州");
         DEFAULT_ONE.setAreaId("101210101");
+    }
+
+    /**
+     * 默认城市
+     */
+    public static City getDefaultCity() {
+        return DEFAULT_ONE;
     }
 
     /**

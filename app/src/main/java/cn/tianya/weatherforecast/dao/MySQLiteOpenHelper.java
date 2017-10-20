@@ -5,11 +5,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
+ * SQLite帮助类
  * Created by Administrator on 2017/8/28.
  */
-public class MySQLiteOpenHelper extends SQLiteOpenHelper {
+class MySQLiteOpenHelper extends SQLiteOpenHelper {
 
-    public MySQLiteOpenHelper(Context context) {
+    MySQLiteOpenHelper(Context context) {
         super(context, "weatherforecast.db", null, 1);
     }
 

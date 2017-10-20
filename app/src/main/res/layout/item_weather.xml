@@ -8,35 +8,18 @@
         android:id="@+id/text_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="日期" />
+        android:layout_weight="1" />
 
     <TextView
-        android:id="@+id/text_day_weather"
+        android:id="@+id/text_weather"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="白天天气" />
+        android:layout_weight="1" />
 
     <TextView
-        android:id="@+id/text_night_weather"
+        android:id="@+id/text_temp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="夜晚天气" />
-
-    <TextView
-        android:id="@+id/text_day_temperature"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="白天温度" />
-
-    <TextView
-        android:id="@+id/text_night_temperature"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="夜晚温度" />
+        android:layout_weight="1" />
 
 </LinearLayout>

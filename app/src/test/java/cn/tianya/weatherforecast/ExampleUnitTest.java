@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.script.Invocable;
@@ -35,6 +36,10 @@ public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws Exception {
         assertEquals(4, 2 + 2);
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH) + 1;
+        System.err.println(month);
     }
 
     @Test
@@ -45,14 +50,14 @@ public class ExampleUnitTest {
         Request request = new Request.Builder().addHeader("Referer", referer).url(api).build();
         OkHttpClient client = new OkHttpClient();
         Response response = client.newCall(request).execute();
-        if(response.isSuccessful()){
+        if (response.isSuccessful()) {
             System.err.println(response.body().string());
         }
 
     }
 
     @Test
-    public void fileTest() throws IOException{
+    public void fileTest() throws IOException {
         InputStream is = new FileInputStream("E:\\Software\\Android\\StudioProjects\\WcnForecast\\app\\src\\main\\assets\\cityData.js");
         String jsonStr = CharStreams.toString(new InputStreamReader(is, StandardCharsets.UTF_8));
         JSONObject json = JSON.parseObject(jsonStr);

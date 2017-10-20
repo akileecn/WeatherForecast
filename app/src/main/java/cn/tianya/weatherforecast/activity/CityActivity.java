@@ -21,7 +21,7 @@ import cn.tianya.weatherforecast.R;
 import cn.tianya.weatherforecast.dao.CityDao;
 import cn.tianya.weatherforecast.entity.City;
 import cn.tianya.weatherforecast.utils.BaseListAdapter;
-import cn.tianya.weatherforecast.utils.C;
+import cn.tianya.weatherforecast.Constants;
 import cn.tianya.weatherforecast.utils.Helper;
 
 public class CityActivity extends AppCompatActivity implements View.OnClickListener {
@@ -76,7 +76,7 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initData() {
-        mSp = getSharedPreferences(C.SP.NAME, MODE_PRIVATE);
+        mSp = getSharedPreferences(Constants.SP.NAME, MODE_PRIVATE);
         mCityDao = new CityDao(this);
         loadCity();
     }
@@ -97,7 +97,7 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.text_city:
                 Helper.setDefaultCity(mSp, city);
                 Intent intent = new Intent();
-                intent.putExtra(C.INTENT_EXTRA_SELECTED_CITY, city);
+                intent.putExtra(Constants.INTENT_EXTRA_SELECTED_CITY, city);
                 setResult(RESULT_OK, intent);
                 finish();
                 break;
