@@ -9,10 +9,10 @@ import java.util.Map;
  * Created by Administrator on 2017/8/29.
  */
 public class ApiConstants {
-    private static final Map<String, String> WEATHER;
-    private static final String API_INDEX = "http://d1.weather.com.cn/weather_index/{id}.html";
-    private static final String API_CALENDAR = "http://d1.weather.com.cn/calendar_new/{year}/{id}_{year}{month}.html";
-    static final String API_REFERER = "http://www.weather.com.cn/";
+    public static final Map<String, String> WEATHER;
+    public static final String API_INDEX = "http://d1.weather.com.cn/weather_index/{id}.html";
+    public static final String API_CALENDAR = "http://d1.weather.com.cn/calendar_new/{year}/{id}_{year}{month}.html";
+    public static final String API_REFERER = "http://www.weather.com.cn/";
 
     static {
         WEATHER = new ImmutableMap.Builder<String, String>()
@@ -50,20 +50,9 @@ public class ApiConstants {
                 .put("31", "强沙尘暴")
                 .put("53", "霾")
                 .put("99", "无")
+
+                .put("301", "雨")
                 .build();
     }
 
-    static String translateWeather(String key) {
-        return WEATHER.get(key);
-    }
-
-    static String getApiIndex(String id) {
-        return API_INDEX.replace("{id}", id);
-    }
-
-    static String getApiCalendar(String id, int year, int month) {
-        String monthStr = month < 10 ? "0" + month : String.valueOf(month);
-        return API_CALENDAR.replace("{id}", id).replace("{year}", String.valueOf(year))
-                .replace("{month}", monthStr);
-    }
 }

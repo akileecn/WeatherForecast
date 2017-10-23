@@ -1,4 +1,4 @@
-package cn.tianya.weatherforecast.api;
+package cn.tianya.weatherforecast.api.entity;
 
 import com.google.common.base.Strings;
 
@@ -35,10 +35,10 @@ public class Today {
     public String getAqi() {
         String rawAqi = String.valueOf(data.get("aqi"));
         if (Strings.isNullOrEmpty(rawAqi)) {
-            return "未知";
+            return "空气质量未知";
         } else {
             int aqi = Integer.parseInt(rawAqi);
-            return aqi + createAqiDesc(aqi);
+            return "空气质量 " + aqi + createAqiDesc(aqi);
         }
     }
 
@@ -72,6 +72,6 @@ public class Today {
      * 湿度
      */
     public String getHumidity() {
-        return String.valueOf(data.get("sd"));
+        return "湿度" + String.valueOf(data.get("sd"));
     }
 }

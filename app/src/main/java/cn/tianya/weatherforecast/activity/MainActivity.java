@@ -20,12 +20,10 @@ import java.util.List;
 
 import cn.tianya.weatherforecast.Constants;
 import cn.tianya.weatherforecast.R;
-import cn.tianya.weatherforecast.api.ApiCallBack;
-import cn.tianya.weatherforecast.api.ApiHelper;
-import cn.tianya.weatherforecast.api.Forecast5d;
-import cn.tianya.weatherforecast.api.Result;
-import cn.tianya.weatherforecast.api.Today;
+import cn.tianya.weatherforecast.api.ApiUtils;
 import cn.tianya.weatherforecast.api.WeatherDto;
+import cn.tianya.weatherforecast.api.entity.BaseForecast;
+import cn.tianya.weatherforecast.api.entity.Today;
 import cn.tianya.weatherforecast.entity.City;
 import cn.tianya.weatherforecast.utils.BaseListAdapter;
 import cn.tianya.weatherforecast.utils.Helper;
@@ -91,43 +89,54 @@ public class MainActivity extends AppCompatActivity {
      * 加载天气信息
      */
     private void loadWeather(City city) {
-        ApiHelper.executeApi(city, new ApiCallBack<WeatherDto>() {
-            @Override
-            public void execute(Result<WeatherDto> result) {
-                if (result.getSuccess()) {
-                    // 城市
-                    cityTv.setText(city.getArea());
-                    WeatherDto response = result.getData();
-                    Today today = response.getToday();
-                    // 当天天气
-                    mTodayViewHolder.setData(today);
-                    // 预报
-                    List<Forecast5d> list = response.getForecastList();
-                    if (list != null) {
-                        forecastLv.setAdapter(new BaseListAdapter<Forecast5d>(list) {
-                            @Override
-                            public View getView(int i, View view, ViewGroup viewGroup) {
-                                Forecast5d forecast = getItem(i);
-                                ItemViewHolder holder;
-                                if (view == null) {
-                                    view = LayoutInflater.from(MainActivity.this).inflate(R.layout.item_weather, viewGroup, false);
-                                    holder = new ItemViewHolder(view);
-                                    view.setTag(holder);
-                                } else {
-                                    holder = (ItemViewHolder) view.getTag();
-                                }
-                                holder.setData(forecast);
-                                return view;
-                            }
-                        });
-                    }
-                } else {
-                    if (!Strings.isNullOrEmpty(result.getMessage())) {
-                        Toast.makeText(MainActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
+        ApiUtils.getIndexData(city, result -> {
+            if (result.getSuccess()) {
+                // 城市
+                cityTv.setText(city.getArea());
+                WeatherDto response = result.getData();
+                Today today = response.getToday();
+                // 当天天气
+                mTodayViewHolder.setData(today);
+                // 预报
+//                initForecastList(response.getForecastList());
+            } else {
+                if (!Strings.isNullOrEmpty(result.getMessage())) {
+                    Toast.makeText(MainActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
+        ApiUtils.get30dData(city, result -> {
+            if (result.getSuccess()) {
+                // 预报
+                initForecastList(result.getData());
+            } else {
+                if (!Strings.isNullOrEmpty(result.getMessage())) {
+                    Toast.makeText(MainActivity.this, result.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void initForecastList(List<BaseForecast> list){
+        if (list != null) {
+            forecastLv.setAdapter(new BaseListAdapter<BaseForecast>(list) {
+                @Override
+                public View getView(int i, View view, ViewGroup viewGroup) {
+                    BaseForecast forecast = getItem(i);
+                    ItemViewHolder holder;
+                    if (view == null) {
+                        view = LayoutInflater.from(MainActivity.this).inflate(R.layout.item_weather, viewGroup, false);
+                        holder = new ItemViewHolder(view);
+                        view.setTag(holder);
+                    } else {
+                        holder = (ItemViewHolder) view.getTag();
+                    }
+                    holder.setData(forecast);
+                    return view;
+                }
+            });
+        }
     }
 
     private static class ItemViewHolder {
@@ -141,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
             tempTv = (TextView) view.findViewById(R.id.text_temp);
         }
 
-        private void setData(Forecast5d forecast) {
+        private void setData(BaseForecast forecast) {
             dateTv.setText(forecast.getDate());
             weatherTv.setText(forecast.getWeather());
             tempTv.setText(forecast.getTemp());
