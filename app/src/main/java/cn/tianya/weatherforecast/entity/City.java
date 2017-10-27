@@ -2,10 +2,13 @@ package cn.tianya.weatherforecast.entity;
 
 import java.io.Serializable;
 
+import lombok.Data;
+
 /**
  * 地区
  * Created by Administrator on 2017/8/26.
  */
+@Data
 public class City implements Serializable {
     private String province; // 省
     private String city; // 市
@@ -38,43 +41,4 @@ public class City implements Serializable {
         return area + "," + city + "," + province;
     }
 
-    public String getProvince() {
-        return province;
-    }
-
-    public void setProvince(String province) {
-        this.province = province;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getArea() {
-        return area;
-    }
-
-    public void setArea(String area) {
-        this.area = area;
-    }
-
-    public String getAreaId() {
-        return areaId;
-    }
-
-    public void setAreaId(String areaId) {
-        this.areaId = areaId;
-    }
-
-    public Boolean getSelected() {
-        return selected;
-    }
-
-    public void setSelected(Boolean selected) {
-        this.selected = selected;
-    }
 }
