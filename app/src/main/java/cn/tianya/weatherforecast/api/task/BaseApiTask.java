@@ -3,12 +3,15 @@ package cn.tianya.weatherforecast.api.task;
 import android.os.AsyncTask;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import javax.script.ScriptException;
 
 import cn.tianya.weatherforecast.api.ApiCallBack;
 import cn.tianya.weatherforecast.api.ApiConstants;
 import cn.tianya.weatherforecast.api.Result;
+import cn.tianya.weatherforecast.utils.Helper;
+import okhttp3.CacheControl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -19,26 +22,39 @@ import okhttp3.Response;
  * @param <T> 结果
  */
 abstract class BaseApiTask<T> extends AsyncTask<Void, Void, Result<T>> {
-    private static final OkHttpClient client;
+    private static OkHttpClient sClient;
+    private static final CacheControl CACHE_CONTROL;
     private ApiCallBack<T> callBack;
     protected String areaId;
 
     static {
-        client = new OkHttpClient.Builder().build();
+        CACHE_CONTROL = new CacheControl.Builder()
+                .maxStale(1, TimeUnit.HOURS)
+                .build();
     }
 
     protected BaseApiTask(String areaId, ApiCallBack<T> callBack) {
         this.areaId = areaId;
         this.callBack = callBack;
+        if (sClient == null) {
+            synchronized (BaseApiTask.class) {
+                if (sClient == null) {
+                    sClient = new OkHttpClient.Builder()
+                            .cache(Helper.getCache())
+                            .build();
+                }
+            }
+        }
     }
 
     @Override
     protected Result<T> doInBackground(Void... voids) {
         Request request = new Request.Builder()
                 .addHeader("Referer", ApiConstants.API_REFERER)
+                .cacheControl(CACHE_CONTROL)
                 .url(createUrl()).build();
         try {
-            Response response = client.newCall(request).execute();
+            Response response = sClient.newCall(request).execute();
             if (response.isSuccessful()) {
                 // 解析js
                 String jsResponse = response.body().string();

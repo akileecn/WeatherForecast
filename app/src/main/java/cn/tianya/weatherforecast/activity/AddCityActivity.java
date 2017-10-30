@@ -19,6 +19,9 @@ import cn.tianya.weatherforecast.dao.CityDao;
 import cn.tianya.weatherforecast.entity.City;
 import cn.tianya.weatherforecast.utils.BaseListAdapter;
 
+/**
+ * 添加城市查询
+ */
 public class AddCityActivity extends AppCompatActivity {
     private List<City> mCityList;
     private BaseListAdapter<City> mCityAdapter;
@@ -35,11 +38,11 @@ public class AddCityActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         setResult(RESULT_OK);
-        finish();
+        super.onBackPressed();
     }
 
     private void initView() {
-        SearchView citySv = (SearchView) findViewById(R.id.search_city);
+        SearchView citySv = findViewById(R.id.search_city);
         citySv.setIconified(false); // 是否图标化
         citySv.setFocusable(true);
         citySv.requestFocusFromTouch(); // 获取焦点
@@ -56,7 +59,7 @@ public class AddCityActivity extends AppCompatActivity {
             }
         });
 
-        ListView cityLv = (ListView) findViewById(R.id.list_city);
+        ListView cityLv = findViewById(R.id.list_city);
         mCityList = new ArrayList<>();
         mCityAdapter = new BaseListAdapter<City>(mCityList) {
             @Override
@@ -73,7 +76,7 @@ public class AddCityActivity extends AppCompatActivity {
         cityLv.setAdapter(mCityAdapter);
         cityLv.setOnItemClickListener((parent, view, position, id) -> {
             City city = (City) view.getTag();
-            mCityDao.updateAsSelected(city.getAreaId());
+            mCityDao.update(city.getAreaId(), true);
             setResult(RESULT_OK);
             finish();
         });

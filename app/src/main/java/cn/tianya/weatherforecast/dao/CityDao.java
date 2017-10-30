@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.preference.PreferenceManager;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -20,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 import cn.tianya.weatherforecast.entity.City;
-import cn.tianya.weatherforecast.Constants;
+import cn.tianya.weatherforecast.utils.Constants;
 
 /**
  * 城市DAO
@@ -36,7 +37,7 @@ public class CityDao {
     public CityDao(Context context) {
         mContext = context;
         mHelper = new MySQLiteOpenHelper(context);
-        mSp = context.getSharedPreferences(Constants.SP.NAME, Context.MODE_PRIVATE);
+        mSp = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     /**
@@ -79,9 +80,9 @@ public class CityDao {
     /**
      * 更新为选中
      */
-    public void updateAsSelected(String areaId) {
+    public void update(String areaId, boolean isSelected) {
         SQLiteDatabase db = mHelper.getWritableDatabase();
-        String sql = "UPDATE city SET selected = 1 WHERE area_id = ?";
+        String sql = "UPDATE city SET selected = " + (isSelected ? 1 : 0) + " WHERE area_id = ?";
         db.execSQL(sql, new String[]{areaId});
     }
 

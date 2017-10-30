@@ -4,4 +4,12 @@
     <string name="search">搜索</string>
     <string name="delete">删除</string>
     <string name="test">测试</string>
+    <string name="local_city">所在城市</string>
+    <string name="title_activity_settings">设置</string>
+    <string name="pref_header_general">通用</string>
+    <string name="pref_header_notifications">提醒</string>
+    <string name="pref_title_enable_forecast_30d">是否显示一个月天气</string>
+    <string name="pref_title_enable_forecast_30d_summary">默认显示5天</string>
+    <string name="pref_key_enable_forecast_30d">ENABLE_FORECAST_30D</string>
+
 </resources>

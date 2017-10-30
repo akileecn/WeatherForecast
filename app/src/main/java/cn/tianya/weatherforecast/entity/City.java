@@ -41,4 +41,11 @@ public class City implements Serializable {
         return area + "," + city + "," + province;
     }
 
+    /**
+     * 根据areaId判断是否为同一个地区
+     */
+    public boolean isSame(City city) {
+        return city != null && areaId.equals(city.getAreaId());
+    }
+
 }

@@ -1,4 +1,4 @@
-package cn.tianya.weatherforecast;
+package cn.tianya.weatherforecast.utils;
 
 /**
  * 常量
@@ -15,9 +15,9 @@ public class Constants {
      * SharedPreferences参数
      */
     public interface SP {
-        String NAME = "WEATHER_FORECAST_SP"; // 名称
         String KEY_CITY_INIT = "CITY_INIT"; // 数据库是否初始化
         String KEY_CURRENT_CITY = "CURRENT_CITY"; // 当前城市
+        String KEY_ENABLE_FORECAST_30D = "ENABLE_FORECAST_30D"; // 是否显示一个月天气
     }
 
 }
