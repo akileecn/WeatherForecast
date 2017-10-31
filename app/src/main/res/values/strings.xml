@@ -10,6 +10,5 @@
     <string name="pref_header_notifications">提醒</string>
     <string name="pref_title_enable_forecast_30d">是否显示一个月天气</string>
     <string name="pref_title_enable_forecast_30d_summary">默认显示5天</string>
-    <string name="pref_key_enable_forecast_30d">ENABLE_FORECAST_30D</string>
-
+    <string name="pref_title_enable_notify">是否开启通知</string>
 </resources>

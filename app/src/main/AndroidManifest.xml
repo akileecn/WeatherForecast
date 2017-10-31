@@ -33,11 +33,12 @@
         <service
             android:name=".service.WarnService"
             android:enabled="true"
-            android:exported="true" />
+            android:exported="true"
+            android:permission="cn.aki.WARN_SERVICE_PERMISSION" />
 
         <activity
             android:name=".activity.SettingsActivity"
-            android:label="@string/title_activity_settings"></activity>
+            android:label="@string/title_activity_settings"/>
     </application>
 
 </manifest>

@@ -3,13 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="cn.tianya.weatherforecast.activity.MainActivity">
     <item
-        android:id="@+id/action_to_city"
+        android:id="@+id/menu_to_city"
         android:orderInCategory="100"
         android:title="@string/title_activity_city"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_to_settings"
+        android:id="@+id/menu_to_settings"
         android:orderInCategory="100"
         android:title="@string/title_activity_settings"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/menu_test"
+        android:orderInCategory="100"
+        android:title="@string/test"
         app:showAsAction="never"/>
 </menu>

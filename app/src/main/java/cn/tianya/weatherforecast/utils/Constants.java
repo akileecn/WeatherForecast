@@ -18,6 +18,7 @@ public class Constants {
         String KEY_CITY_INIT = "CITY_INIT"; // 数据库是否初始化
         String KEY_CURRENT_CITY = "CURRENT_CITY"; // 当前城市
         String KEY_ENABLE_FORECAST_30D = "ENABLE_FORECAST_30D"; // 是否显示一个月天气
+        String KEY_ENABLE_NOTIFY = "KEY_ENABLE_NOTIFY"; // 是否开启通知
     }
 
 }

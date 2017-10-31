@@ -1,5 +1,7 @@
 package cn.tianya.weatherforecast.activity;
 
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -29,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_SELECT_CITY = 1;
     private static final int REQUEST_CODE_SETTINGS = 2;
     private ViewPager mWeatherPager;
-    private TabLayout mWeatherTab;
     private List<City> mCityList;
     private CityDao mCityDao;
 
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
             reloadCity();
         }
         if (requestCode == REQUEST_CODE_SETTINGS && resultCode == RESULT_OK) {
-//            loadWeather(mCurrentCity);
+            reloadCity();
         }
     }
 
@@ -65,11 +66,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_to_city:
+            case R.id.menu_to_city:
                 startActivityForResult(new Intent(this, CityActivity.class), REQUEST_CODE_SELECT_CITY);
                 return true;
-            case R.id.action_to_settings:
+            case R.id.menu_to_settings:
                 startActivityForResult(new Intent(this, SettingsActivity.class), REQUEST_CODE_SETTINGS);
+                return true;
+            case R.id.menu_test:
+                //TODO test
+                test();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -81,8 +86,8 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mWeatherPager = findViewById(R.id.pager_weather);
-        mWeatherTab = findViewById(R.id.tab_weather);
-        mWeatherTab.setupWithViewPager(mWeatherPager);
+        TabLayout weatherTab = findViewById(R.id.tab_weather);
+        weatherTab.setupWithViewPager(mWeatherPager);
     }
 
     private void initData() {
@@ -136,5 +141,15 @@ public class MainActivity extends AppCompatActivity {
         }
         mWeatherPager.getAdapter().notifyDataSetChanged();
         mWeatherPager.setCurrentItem(0);
+    }
+
+    private void test() {
+        Notification.Builder builder = new Notification.Builder(this)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle("天气提醒")
+                .setContentText("xxxx");
+        Notification notification = builder.build();
+        NotificationManager manager = getSystemService(NotificationManager.class);
+        manager.notify(1, notification);
     }
 }

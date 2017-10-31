@@ -1,8 +1,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <SwitchPreference
         android:defaultValue="false"
-        android:key="@string/pref_key_enable_forecast_30d"
+        android:key="ENABLE_FORECAST_30D"
         android:summary="@string/pref_title_enable_forecast_30d_summary"
         android:title="@string/pref_title_enable_forecast_30d" />
-
 </PreferenceScreen>

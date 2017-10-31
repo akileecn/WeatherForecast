@@ -35,7 +35,6 @@ public class WeatherAllView extends LinearLayout {
     private TextView cityTv;
     private ListView forecastLv;
     private SharedPreferences mSp;
-    private City mCurrentCity;
 
     public WeatherAllView(Context context) {
         super(context);
@@ -59,7 +58,7 @@ public class WeatherAllView extends LinearLayout {
 
     private void initView() {
         setOrientation(VERTICAL);
-        LayoutInflater.from(getContext()).inflate(R.layout.pager_item_weather_all, this);
+        LayoutInflater.from(getContext()).inflate(R.layout.view_weather_all, this);
         mTodayViewHolder = new TodayViewHolder();
         cityTv = findViewById(R.id.text_city);
         forecastLv = findViewById(R.id.list_forecast);
@@ -156,14 +155,14 @@ public class WeatherAllView extends LinearLayout {
         private TextView tempTv;
         private TextView aqiTv;
         private TextView windTv;
-        private TextView humidity;
+        private TextView humidityTv;
 
         private TodayViewHolder() {
             weatherTv = findViewById(R.id.text_weather);
             tempTv = findViewById(R.id.text_temp);
             aqiTv = findViewById(R.id.text_aqi);
             windTv = findViewById(R.id.text_wind);
-            humidity = findViewById(R.id.text_humidity);
+            humidityTv = findViewById(R.id.text_humidity);
         }
 
         private void setData(Today today) {
@@ -171,7 +170,7 @@ public class WeatherAllView extends LinearLayout {
             tempTv.setText(today.getTemperature());
             aqiTv.setText(today.getAqi());
             windTv.setText(today.getWind());
-            humidity.setText(today.getHumidity());
+            humidityTv.setText(today.getHumidity());
         }
     }
 }
