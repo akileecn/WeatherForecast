@@ -3,6 +3,7 @@ package cn.tianya.weatherforecast;
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
+import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -16,6 +17,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -80,5 +82,21 @@ public class ExampleInstrumentedTest {
         engine.eval(jsStr + jsAppend);
         Object today = ((Invocable) engine).invokeFunction("getForecast");
         System.err.println(JSON.toJSONString(today));
+    }
+
+    @Test
+    public void timeTest(){
+        Calendar cal = Calendar.getInstance();
+        cal.set(Calendar.HOUR_OF_DAY, 17);
+        cal.set(Calendar.MINUTE, 11);
+        cal.set(Calendar.SECOND, 0);
+        Log.e("cal time", String.valueOf(cal.getTimeInMillis()));
+
+        Calendar cal2 = Calendar.getInstance();
+        cal2.set(Calendar.HOUR, 17);
+        cal2.set(Calendar.AM_PM, Calendar.PM);
+        cal2.set(Calendar.MINUTE, 11);
+        cal2.set(Calendar.SECOND, 0);
+        Log.e("cal2 time", String.valueOf(cal.getTimeInMillis()));
     }
 }

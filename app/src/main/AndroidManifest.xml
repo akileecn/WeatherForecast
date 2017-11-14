@@ -3,10 +3,11 @@
     package="cn.tianya.weatherforecast">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SET_ALARM" />
 
     <application
         android:name=".MyApplication"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -31,14 +32,22 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <service
-            android:name=".service.WarnService"
+            android:name=".service.AlarmService"
             android:enabled="true"
-            android:exported="true"
-            android:permission="cn.aki.WARN_SERVICE_PERMISSION" />
+            android:exported="true" />
 
         <activity
             android:name=".activity.SettingsActivity"
-            android:label="@string/title_activity_settings"/>
+            android:label="@string/title_activity_settings" />
+
+        <receiver
+            android:name=".receiver.AlarmReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="cn.tianya.weatherforecast.action.DAILY_ALARM" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
