@@ -19,6 +19,8 @@ public interface Constants {
         String KEY_CURRENT_CITY = "CURRENT_CITY"; // 当前城市
         String KEY_ENABLE_FORECAST_30D = "ENABLE_FORECAST_30D"; // 是否显示一个月天气
         String KEY_ENABLE_NOTIFY = "KEY_ENABLE_NOTIFY"; // 是否开启通知
+        String KEY_NOTIFY_TIME = "KEY_NOTIFY_TIME"; // 通知时间
+        String DEFAULT_NOTIFY_TIME = "07:00"; // 默认通知时间
     }
 
     /**

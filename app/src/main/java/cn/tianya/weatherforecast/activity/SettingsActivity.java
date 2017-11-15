@@ -3,11 +3,13 @@ package cn.tianya.weatherforecast.activity;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
 import android.view.MenuItem;
 
@@ -15,7 +17,9 @@ import java.util.List;
 
 import cn.tianya.weatherforecast.R;
 import cn.tianya.weatherforecast.service.AlarmService;
-import cn.tianya.weatherforecast.utils.Constants;
+
+import static cn.tianya.weatherforecast.utils.Constants.SP.KEY_ENABLE_NOTIFY;
+import static cn.tianya.weatherforecast.utils.Constants.SP.KEY_NOTIFY_TIME;
 
 /**
  * 设置
@@ -97,14 +101,25 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
+            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
             addPreferencesFromResource(R.xml.pref_notification);
             setHasOptionsMenu(true);
-            findPreference(Constants.SP.KEY_ENABLE_NOTIFY).setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-                @Override
-                public boolean onPreferenceChange(Preference preference, Object newValue) {
-                    startNotificationAlarm((Boolean) newValue);
-                    return true;
+            // 时间
+            Preference time = findPreference(KEY_NOTIFY_TIME);
+            time.setEnabled(sp.getBoolean(KEY_ENABLE_NOTIFY, false));
+            time.setOnPreferenceChangeListener((preference, newValue) -> {
+                if (sp.getBoolean(KEY_ENABLE_NOTIFY, false)) {
+                    startNotificationAlarm(true);
                 }
+                return true;
+            });
+            // 是否开启
+            findPreference(KEY_ENABLE_NOTIFY).setOnPreferenceChangeListener((preference, newValue) -> {
+                boolean value = (Boolean) newValue;
+                time.setEnabled(value);
+                //TODO 与service交互
+                startNotificationAlarm(value);
+                return true;
             });
         }
 

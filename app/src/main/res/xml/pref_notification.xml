@@ -3,4 +3,8 @@
         android:defaultValue="false"
         android:key="KEY_ENABLE_NOTIFY"
         android:title="@string/pref_title_enable_notify" />
+    <cn.tianya.weatherforecast.view.TimePreference
+        android:defaultValue="06:00"
+        android:key="KEY_NOTIFY_TIME"
+        android:title="@string/pref_title_notify_time"/>
 </PreferenceScreen>
