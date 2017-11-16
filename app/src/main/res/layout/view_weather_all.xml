@@ -9,32 +9,32 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/text_city"
+            android:id="@+id/city_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/text_weather"
+            android:id="@+id/weather_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/text_temp"
+            android:id="@+id/temp_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/text_aqi"
+            android:id="@+id/aqi_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/text_wind"
+            android:id="@+id/wind_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/text_humidity"
+            android:id="@+id/humidity_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -42,7 +42,7 @@
 
     <!-- 预报 -->
     <ListView
-        android:id="@+id/list_forecast"
+        android:id="@+id/forecast_lv"
         android:layout_width="match_parent"
         android:layout_height="200dp" />
 

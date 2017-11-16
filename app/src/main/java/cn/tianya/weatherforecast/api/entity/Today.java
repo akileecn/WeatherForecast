@@ -16,6 +16,13 @@ public class Today {
     }
 
     /**
+     * 城市
+     */
+    public String getCity() {
+        return String.valueOf(data.get("cityname"));
+    }
+
+    /**
      * 天气
      */
     public String getWeather() {

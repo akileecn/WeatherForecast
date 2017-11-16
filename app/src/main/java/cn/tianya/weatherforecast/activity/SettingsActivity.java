@@ -108,16 +108,14 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             Preference time = findPreference(KEY_NOTIFY_TIME);
             time.setEnabled(sp.getBoolean(KEY_ENABLE_NOTIFY, false));
             time.setOnPreferenceChangeListener((preference, newValue) -> {
-                if (sp.getBoolean(KEY_ENABLE_NOTIFY, false)) {
-                    startNotificationAlarm(true);
-                }
+                startNotificationAlarm(true);
+                preference.setSummary(newValue.toString());
                 return true;
             });
             // 是否开启
             findPreference(KEY_ENABLE_NOTIFY).setOnPreferenceChangeListener((preference, newValue) -> {
                 boolean value = (Boolean) newValue;
                 time.setEnabled(value);
-                //TODO 与service交互
                 startNotificationAlarm(value);
                 return true;
             });

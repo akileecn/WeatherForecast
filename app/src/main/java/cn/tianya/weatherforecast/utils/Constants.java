@@ -6,10 +6,14 @@ package cn.tianya.weatherforecast.utils;
  */
 
 public interface Constants {
+
     /**
-     * intent额外数据——选中城市
+     * intent额外数据
      */
-    String INTENT_EXTRA_SELECTED_CITY = "SELECTED_CITY";
+    interface IntentExtra{
+        String SELECTED_CITY = "SELECTED_CITY"; // 选中城市
+        String SELECTED_AREA_ID = "SELECTED_AREA_ID"; // 选中地区
+    }
 
     /**
      * SharedPreferences参数
@@ -21,6 +25,8 @@ public interface Constants {
         String KEY_ENABLE_NOTIFY = "KEY_ENABLE_NOTIFY"; // 是否开启通知
         String KEY_NOTIFY_TIME = "KEY_NOTIFY_TIME"; // 通知时间
         String DEFAULT_NOTIFY_TIME = "07:00"; // 默认通知时间
+        String KEY_HOME_AREA_ID = "KEY_HOME_AREA_ID"; // 家所在城市ID
+        String KEY_COMPANY_AREA_ID = "KEY_COMPANY_AREA_ID"; // 公司所在城市ID
     }
 
     /**

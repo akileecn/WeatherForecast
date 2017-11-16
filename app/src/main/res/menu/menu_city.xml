@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="cn.tianya.weatherforecast.activity.CityActivity">
+    <item
+        android:id="@+id/home_menu"
+        android:title="@string/menu_update_as_home"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/company_menu"
+        android:title="@string/menu_update_as_company"
+        app:showAsAction="never" />
+</menu>

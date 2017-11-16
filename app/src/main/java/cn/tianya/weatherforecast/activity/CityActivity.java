@@ -1,16 +1,22 @@
 package cn.tianya.weatherforecast.activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,14 +27,16 @@ import cn.tianya.weatherforecast.R;
 import cn.tianya.weatherforecast.dao.CityDao;
 import cn.tianya.weatherforecast.entity.City;
 import cn.tianya.weatherforecast.utils.BaseListAdapter;
-import cn.tianya.weatherforecast.utils.Constants;
-import cn.tianya.weatherforecast.utils.Helper;
+
+import static cn.tianya.weatherforecast.utils.Constants.SP.KEY_COMPANY_AREA_ID;
+import static cn.tianya.weatherforecast.utils.Constants.SP.KEY_HOME_AREA_ID;
 
 /**
  * 城市管理列表
  */
 public class CityActivity extends AppCompatActivity implements View.OnClickListener {
     private static final int REQUEST_CODE_ADD_CITY = 1;
+    private SharedPreferences sp;
     private List<City> mCityList;
     private CityDao mCityDao;
     private BaseAdapter mCityAdapter;
@@ -37,8 +45,34 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sp = PreferenceManager.getDefaultSharedPreferences(this);
         initView();
         initData();
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_city, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        City city = mCityList.get(info.position);
+        switch (item.getItemId()) {
+            case R.id.home_menu:
+                sp.edit().putString(KEY_HOME_AREA_ID, city.getAreaId()).apply();
+                mCityAdapter.notifyDataSetChanged();
+                return true;
+            case R.id.company_menu:
+                sp.edit().putString(KEY_COMPANY_AREA_ID, city.getAreaId()).apply();
+                mCityAdapter.notifyDataSetChanged();
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
     }
 
     @Override
@@ -66,7 +100,9 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(view -> startActivityForResult(new Intent(CityActivity.this, AddCityActivity.class), REQUEST_CODE_ADD_CITY));
 
-        ListView cityLv = findViewById(R.id.list_city);
+        ListView cityLv = findViewById(R.id.city_lv);
+        // 注册菜单
+        registerForContextMenu(cityLv);
         mCityList = new ArrayList<>();
         mCityAdapter = new BaseListAdapter<City>(mCityList) {
             @Override
@@ -106,16 +142,11 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         City city = (City) v.getTag();
         switch (v.getId()) {
-            case R.id.text_city:
-                Helper.setDefaultCity(city);
-                Intent intent = new Intent();
-                intent.putExtra(Constants.INTENT_EXTRA_SELECTED_CITY, city);
-                setResult(RESULT_OK, intent);
-                finish();
-                break;
-            case R.id.btn_delete:
+            case R.id.delete_iv:
                 deleteCity(city);
                 isDataChanged = true;
+                break;
+            default:
                 break;
         }
     }
@@ -125,19 +156,25 @@ public class CityActivity extends AppCompatActivity implements View.OnClickListe
      */
     private class ItemViewHolder {
         private TextView cityTv;
-        private ImageButton deleteBtn;
+        private ImageView deleteIv;
+        private ImageView homeIv;
+        private ImageView companyIv;
 
         private ItemViewHolder(View view) {
-            cityTv = view.findViewById(R.id.text_city);
-            cityTv.setOnClickListener(CityActivity.this);
-            deleteBtn = view.findViewById(R.id.btn_delete);
-            deleteBtn.setOnClickListener(CityActivity.this);
+            cityTv = view.findViewById(R.id.city_tv);
+            deleteIv = view.findViewById(R.id.delete_iv);
+            deleteIv.setOnClickListener(CityActivity.this);
+            homeIv = view.findViewById(R.id.home_iv);
+            companyIv = view.findViewById(R.id.company_iv);
         }
 
         private void setData(City city) {
-            deleteBtn.setTag(city);
-            cityTv.setTag(city);
+            deleteIv.setTag(city);
             cityTv.setText(city.getArea());
+            String homeAreaId = sp.getString(KEY_HOME_AREA_ID, "");
+            homeIv.setVisibility(homeAreaId.equals(city.getAreaId()) ? View.VISIBLE : View.GONE);
+            String companyAreaId = sp.getString(KEY_COMPANY_AREA_ID, "");
+            companyIv.setVisibility(companyAreaId.equals(city.getAreaId()) ? View.VISIBLE : View.GONE);
         }
     }
 

@@ -7,19 +7,34 @@
     android:orientation="horizontal">
 
     <TextView
-        android:id="@+id/text_city"
+        android:id="@+id/city_tv"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:text="TextView"
+        android:textSize="20sp" />
+
+    <ImageView
+        android:id="@+id/home_iv"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:srcCompat="@drawable/ic_home" />
+
+    <ImageView
+        android:id="@+id/company_iv"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:srcCompat="@drawable/ic_company" />
+
+    <Space
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_gravity="center_vertical"
-        android:textSize="@dimen/search_item_text_size"
-        android:text="TextView" />
+        android:layout_weight="1" />
 
-    <ImageButton
-        android:id="@+id/btn_delete"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:background="@android:color/transparent"
+    <ImageView
+        android:id="@+id/delete_iv"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:contentDescription="@string/delete"
         app:srcCompat="@android:drawable/ic_delete" />
 

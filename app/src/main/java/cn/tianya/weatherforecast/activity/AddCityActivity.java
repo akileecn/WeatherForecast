@@ -42,7 +42,7 @@ public class AddCityActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        SearchView citySv = findViewById(R.id.search_city);
+        SearchView citySv = findViewById(R.id.city_sv);
         citySv.setIconified(false); // 是否图标化
         citySv.setFocusable(true);
         citySv.requestFocusFromTouch(); // 获取焦点
@@ -59,7 +59,7 @@ public class AddCityActivity extends AppCompatActivity {
             }
         });
 
-        ListView cityLv = findViewById(R.id.list_city);
+        ListView cityLv = findViewById(R.id.city_lv);
         mCityList = new ArrayList<>();
         mCityAdapter = new BaseListAdapter<City>(mCityList) {
             @Override

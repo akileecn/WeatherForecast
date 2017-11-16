@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">天气预报</string>
-    <string name="title_activity_city">城市管理</string>
     <string name="search">搜索</string>
     <string name="delete">删除</string>
     <string name="test">测试</string>
     <string name="local_city">所在城市</string>
+    <string name="title_activity_city">城市管理</string>
     <string name="title_activity_settings">设置</string>
     <string name="pref_header_general">通用</string>
     <string name="pref_header_notifications">提醒</string>
@@ -12,4 +12,6 @@
     <string name="pref_title_enable_forecast_30d_summary">默认显示5天</string>
     <string name="pref_title_enable_notify">是否开启通知</string>
     <string name="pref_title_notify_time">通知时间</string>
+    <string name="menu_update_as_home">设置为家</string>
+    <string name="menu_update_as_company">设置为公司</string>
 </resources>

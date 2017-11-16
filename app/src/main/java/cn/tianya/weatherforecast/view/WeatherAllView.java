@@ -18,10 +18,11 @@ import com.google.common.base.Strings;
 import java.util.List;
 
 import cn.tianya.weatherforecast.R;
-import cn.tianya.weatherforecast.api.ApiUtils;
 import cn.tianya.weatherforecast.api.WeatherDto;
 import cn.tianya.weatherforecast.api.entity.BaseForecast;
 import cn.tianya.weatherforecast.api.entity.Today;
+import cn.tianya.weatherforecast.api.task.Api30dTask;
+import cn.tianya.weatherforecast.api.task.ApiIndexTask;
 import cn.tianya.weatherforecast.entity.City;
 import cn.tianya.weatherforecast.utils.BaseListAdapter;
 import cn.tianya.weatherforecast.utils.Constants;
@@ -60,8 +61,8 @@ public class WeatherAllView extends LinearLayout {
         setOrientation(VERTICAL);
         LayoutInflater.from(getContext()).inflate(R.layout.view_weather_all, this);
         mTodayViewHolder = new TodayViewHolder();
-        cityTv = findViewById(R.id.text_city);
-        forecastLv = findViewById(R.id.list_forecast);
+        cityTv = findViewById(R.id.city_tv);
+        forecastLv = findViewById(R.id.forecast_lv);
         mSp = PreferenceManager.getDefaultSharedPreferences(getContext());
     }
 
@@ -70,7 +71,7 @@ public class WeatherAllView extends LinearLayout {
      */
     public void loadWeather(City city) {
         boolean is30d = mSp.getBoolean(Constants.SP.KEY_ENABLE_FORECAST_30D, false);
-        ApiUtils.getIndexData(city, result -> {
+        new ApiIndexTask(city.getAreaId(), result -> {
             if (result.getSuccess()) {
                 // 城市
                 cityTv.setText(city.getArea());
@@ -87,9 +88,9 @@ public class WeatherAllView extends LinearLayout {
                     Toast.makeText(getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
-        });
+        }).execute();
         if (is30d) {
-            ApiUtils.get30dData(city, result -> {
+            new Api30dTask(city.getAreaId(), result -> {
                 if (result.getSuccess()) {
                     // 预报
                     initForecastList(result.getData());
@@ -98,7 +99,7 @@ public class WeatherAllView extends LinearLayout {
                         Toast.makeText(getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
-            });
+            }).execute();
         }
     }
 
@@ -135,9 +136,9 @@ public class WeatherAllView extends LinearLayout {
         private TextView tempTv;
 
         private ItemViewHolder(View view) {
-            dateTv = view.findViewById(R.id.text_date);
-            weatherTv = view.findViewById(R.id.text_weather);
-            tempTv = view.findViewById(R.id.text_temp);
+            dateTv = view.findViewById(R.id.date_tv);
+            weatherTv = view.findViewById(R.id.weather_tv);
+            tempTv = view.findViewById(R.id.temp_tv);
         }
 
         private void setData(BaseForecast forecast) {
@@ -158,11 +159,11 @@ public class WeatherAllView extends LinearLayout {
         private TextView humidityTv;
 
         private TodayViewHolder() {
-            weatherTv = findViewById(R.id.text_weather);
-            tempTv = findViewById(R.id.text_temp);
-            aqiTv = findViewById(R.id.text_aqi);
-            windTv = findViewById(R.id.text_wind);
-            humidityTv = findViewById(R.id.text_humidity);
+            weatherTv = findViewById(R.id.weather_tv);
+            tempTv = findViewById(R.id.temp_tv);
+            aqiTv = findViewById(R.id.aqi_tv);
+            windTv = findViewById(R.id.wind_tv);
+            humidityTv = findViewById(R.id.humidity_tv);
         }
 
         private void setData(Today today) {

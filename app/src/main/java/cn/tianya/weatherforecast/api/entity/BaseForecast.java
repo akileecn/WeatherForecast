@@ -4,7 +4,7 @@ import com.google.common.base.Strings;
 
 import org.mozilla.javascript.NativeObject;
 
-import cn.tianya.weatherforecast.api.ApiUtils;
+import static cn.tianya.weatherforecast.api.ApiConstants.WEATHER;
 
 /**
  * 预报数据
@@ -23,7 +23,7 @@ public abstract class BaseForecast {
 
     protected String getTranslatedWeather(String key) {
         String value = getValue(key);
-        return Strings.isNullOrEmpty(value) ? value : ApiUtils.translateWeather(getValue(key));
+        return Strings.isNullOrEmpty(value) ? value : WEATHER.get(getValue(key));
     }
 
     /**
@@ -34,11 +34,11 @@ public abstract class BaseForecast {
     /**
      * 天气
      */
-    public String getWeather(){
+    public String getWeather() {
         String night = getNightWeather();
-        if(Strings.isNullOrEmpty(night)){
+        if (Strings.isNullOrEmpty(night)) {
             return getDayWeather();
-        }else{
+        } else {
             return getDayWeather() + "/" + getNightWeather();
         }
     }

@@ -17,13 +17,13 @@ import static cn.tianya.weatherforecast.utils.Constants.SP.KEY_CURRENT_CITY;
  */
 public class Helper {
     private static Cache sCache;
-    private static SharedPreferences sSp;
+    private static SharedPreferences sp;
 
     /**
      * 初始化
      */
     public static void init(Context context) {
-        sSp = PreferenceManager.getDefaultSharedPreferences(context);
+        sp = PreferenceManager.getDefaultSharedPreferences(context);
         // 申请10MB缓存
         sCache = new Cache(context.getCacheDir(), 100 * 1024 * 1024);
     }
@@ -32,7 +32,7 @@ public class Helper {
      * 获取默认城市
      */
     public static City getDefaultCity() {
-        String json = sSp.getString(KEY_CURRENT_CITY, "");
+        String json = sp.getString(KEY_CURRENT_CITY, "");
         if (json.isEmpty()) {
             return City.getDefaultCity();
         } else {
@@ -44,7 +44,7 @@ public class Helper {
      * 设置默认城市
      */
     public static void setDefaultCity(City city) {
-        sSp.edit().putString(KEY_CURRENT_CITY, JSON.toJSONString(city)).apply();
+        sp.edit().putString(KEY_CURRENT_CITY, JSON.toJSONString(city)).apply();
     }
 
     /**

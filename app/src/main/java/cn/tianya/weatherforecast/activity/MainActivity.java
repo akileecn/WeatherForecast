@@ -1,7 +1,5 @@
 package cn.tianya.weatherforecast.activity;
 
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -24,6 +22,8 @@ import cn.tianya.weatherforecast.entity.City;
 import cn.tianya.weatherforecast.utils.Helper;
 import cn.tianya.weatherforecast.view.WeatherAllView;
 
+import static cn.tianya.weatherforecast.utils.Constants.ACTION_DAILY_ALARM;
+
 /**
  * 主程序
  */
@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_SELECT_CITY = 1;
     private static final int REQUEST_CODE_SETTINGS = 2;
     private ViewPager mWeatherPager;
+    private WeatherPagerAdapter mWeatherPagerAdapter;
     private List<City> mCityList;
     private CityDao mCityDao;
 
@@ -85,15 +86,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        mWeatherPager = findViewById(R.id.pager_weather);
-        TabLayout weatherTab = findViewById(R.id.tab_weather);
+        mWeatherPager = findViewById(R.id.weather_vp);
+        TabLayout weatherTab = findViewById(R.id.weather_tab);
         weatherTab.setupWithViewPager(mWeatherPager);
     }
 
     private void initData() {
         mCityDao = new CityDao(this);
         mCityList = new ArrayList<>();
-        mWeatherPager.setAdapter(new WeatherPagerAdapter());
+        mWeatherPagerAdapter = new WeatherPagerAdapter();
+        mWeatherPager.setAdapter(mWeatherPagerAdapter);
         reloadCity();
     }
 
@@ -139,17 +141,13 @@ public class MainActivity extends AppCompatActivity {
         } else {
             mCityList.add(Helper.getDefaultCity());
         }
-        mWeatherPager.getAdapter().notifyDataSetChanged();
+        mWeatherPagerAdapter.notifyDataSetChanged();
+        mWeatherPager.setAdapter(mWeatherPagerAdapter);
         mWeatherPager.setCurrentItem(0);
     }
 
     private void test() {
-        Notification.Builder builder = new Notification.Builder(this)
-                .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("天气提醒")
-                .setContentText("xxxx");
-        Notification notification = builder.build();
-        NotificationManager manager = getSystemService(NotificationManager.class);
-        manager.notify(1, notification);
+        Intent intent = new Intent(ACTION_DAILY_ALARM);
+        sendBroadcast(intent);
     }
 }

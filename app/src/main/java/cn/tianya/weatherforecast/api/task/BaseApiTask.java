@@ -85,4 +85,11 @@ abstract class BaseApiTask<T> extends AsyncTask<Void, Void, Result<T>> {
      * @throws ScriptException       解析js时可能抛出的异常
      */
     abstract T createResult(String jsResponse) throws NoSuchMethodException, ScriptException;
+
+    /**
+     * 同步执行
+     */
+    public void syncExecute() {
+        onPostExecute(doInBackground());
+    }
 }
