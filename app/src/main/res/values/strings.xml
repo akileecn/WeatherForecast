@@ -4,8 +4,13 @@
     <string name="delete">删除</string>
     <string name="test">测试</string>
     <string name="local_city">所在城市</string>
+    <string name="main_weather">主要天气</string>
+    <string name="secondary_weather">次要天气</string>
+    <string name="day_number">天数</string>
+    <string name="not_found">不存在的</string>
     <string name="title_activity_city">城市管理</string>
     <string name="title_activity_settings">设置</string>
+    <string name="title_weather_search">出行助手</string>
     <string name="pref_header_general">通用</string>
     <string name="pref_header_notifications">提醒</string>
     <string name="pref_title_enable_forecast_30d">是否显示一个月天气</string>

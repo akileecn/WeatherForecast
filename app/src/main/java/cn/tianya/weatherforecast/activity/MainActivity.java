@@ -77,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
                 //TODO test
                 test();
                 return true;
+            case R.id.menu_weather_search:
+                startActivity(new Intent(this, WeatherSearchActivity.class));
             default:
                 return super.onOptionsItemSelected(item);
         }

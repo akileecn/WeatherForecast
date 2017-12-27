@@ -69,4 +69,9 @@ public abstract class BaseForecast {
      * 最低温度
      */
     protected abstract String getMinTemp();
+
+    /**
+     * 获得天气原生值
+     */
+    public abstract String getRawWeather();
 }

@@ -35,6 +35,11 @@ public class Forecast40d extends BaseForecast {
     }
 
     @Override
+    public String getRawWeather() {
+        return getValue("c1");
+    }
+
+    @Override
     protected String getNightWeather() {
         return getTranslatedWeather("c2");
     }

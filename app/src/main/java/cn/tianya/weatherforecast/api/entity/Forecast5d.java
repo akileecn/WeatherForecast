@@ -37,4 +37,9 @@ public class Forecast5d extends BaseForecast {
         return getValue("fd");
     }
 
+    @Override
+    public String getRawWeather() {
+        return getValue("fa");
+    }
+
 }

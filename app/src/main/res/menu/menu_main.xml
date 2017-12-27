@@ -13,6 +13,11 @@
         android:title="@string/title_activity_settings"
         app:showAsAction="never"/>
     <item
+        android:id="@+id/menu_weather_search"
+        android:orderInCategory="100"
+        android:title="@string/title_weather_search"
+        app:showAsAction="never"/>
+    <item
         android:id="@+id/menu_test"
         android:orderInCategory="100"
         android:title="@string/test"
