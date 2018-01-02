@@ -20,6 +20,7 @@ import cn.tianya.weatherforecast.api.entity.BaseForecast;
 import cn.tianya.weatherforecast.api.task.Api30dTask;
 import cn.tianya.weatherforecast.dao.CityDao;
 import cn.tianya.weatherforecast.entity.City;
+import cn.tianya.weatherforecast.utils.Helper;
 import lombok.Data;
 
 public class WeatherSearchActivity extends AppCompatActivity {
@@ -77,6 +78,7 @@ public class WeatherSearchActivity extends AppCompatActivity {
         List<SpinnerData> result = new ArrayList<>();
         List<City> list = new CityDao(this).listSelected();
         if (list == null || list.isEmpty()) {
+            result.add(new SpinnerData(Helper.getDefaultCity()));
             return result;
         }
         for (City city : list) {
