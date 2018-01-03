@@ -38,50 +38,25 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        String areaId = intent.getStringExtra(Constants.IntentExtra.SELECTED_AREA_ID);
-        Log.i(TAG, "onReceive: 天气提醒 areaId:" + areaId);
-        // 存在areaId则通知指定地域天气, 不存在则通知家和公司的天气
-        if (areaId != null) {
-            sendSingleNotification(context, areaId);
-        } else {
-            SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-            String homeAreaId = sp.getString(Constants.SP.KEY_HOME_AREA_ID, "");
-            String companyAreaId = sp.getString(Constants.SP.KEY_COMPANY_AREA_ID, "");
-            List<String> areaIdList = new ArrayList<>();
-            if (!Strings.isNullOrEmpty(homeAreaId)) {
-                areaIdList.add(homeAreaId);
-            }
-            if (!Strings.isNullOrEmpty(companyAreaId)) {
-                areaIdList.add(companyAreaId);
-            }
-            sendMultipleNotification(context, areaIdList);
+        // 通知家和公司的天气
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
+        String homeAreaId = sp.getString(Constants.SP.KEY_HOME_AREA_ID, "");
+        String companyAreaId = sp.getString(Constants.SP.KEY_COMPANY_AREA_ID, "");
+        Log.i(TAG, "onReceive: 天气提醒 homeAreaId<" + homeAreaId + "> companyAreaId<" + companyAreaId + ">");
+        List<String> areaIdList = new ArrayList<>();
+        if (!Strings.isNullOrEmpty(homeAreaId)) {
+            areaIdList.add(homeAreaId);
         }
-    }
-
-    private void sendSingleNotification(Context context, String areaId) {
-        if (Strings.isNullOrEmpty(areaId)) {
-            return;
+        if (!Strings.isNullOrEmpty(companyAreaId)) {
+            areaIdList.add(companyAreaId);
         }
-        new ApiIndexTask(areaId, result -> {
-            if (result.getSuccess()) {
-                Today today = result.getData().getToday();
-                String text = today.getCity() + " " + today.getWeather() + " " + today.getTemperature();
-                PendingIntent pendingIntent = PendingIntent.getActivity(context, 1
-                        , new Intent(context, MainActivity.class), 0);
-                Notification.Builder builder = new Notification.Builder(context)
-                        .setContentIntent(pendingIntent)
-                        .setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentTitle("天气提醒")
-                        .setContentText(text);
-                Notification notification = builder.build();
-                NotificationManager manager = context.getSystemService(NotificationManager.class);
-                assert manager != null;
-                manager.notify(1, notification);
-            }
-        }).execute();
+        sendMultipleNotification(context, areaIdList);
     }
 
     private void sendMultipleNotification(Context context, List<String> areaIdList) {
+        if(areaIdList.isEmpty()){
+            return;
+        }
         new MultipleNotificationTask(context, areaIdList).execute();
     }
 
